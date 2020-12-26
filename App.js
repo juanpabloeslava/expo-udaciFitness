@@ -1,8 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
+
+  useEffect( () => {
+    console.log('hi ejposa')
+  }, [])
+
   return (
     <View style={styles.container}>
       <Text>Hola Ejposa</Text>
