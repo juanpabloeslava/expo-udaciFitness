@@ -10,9 +10,6 @@ export default function App() {
   return (
     <View>
       <AddEntry />
-      <Text>
-        Hola ejposa
-      </Text>
     </View>
   )
 

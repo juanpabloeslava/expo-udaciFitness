@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
+// comps
+import MetricSlider from './MetricSlider';
+import MetricStepper from './MetricStepper';
 // react native comps
 import { View, Text } from "react-native";
 // data
 import { getMetricMetaInfo } from '../utils/helpers'
 
 const AddEntry = () => {
-
-    // const [run, setRun] = useState(0);
-    // const [bike, setBike] = useState(0);
-    // const [swim, setSwim] = useState(0);
-    // const [sleep, selSleep] = useState(0);
-    // const [eat, setEat] = useState(0);
 
     const [state, setState] = useState({
         // increment and decrement
@@ -63,7 +60,8 @@ const AddEntry = () => {
     return ( 
         <View>
             <Text> Add Entry Component </Text>
-            {getMetricMetaInfo('bike').getIcon()}
+            <MetricSlider />
+            <MetricStepper />
         </View>
      )
 }
