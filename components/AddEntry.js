@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import MetricSlider from './MetricSlider';
 import MetricStepper from './MetricStepper';
 import DateHeader from './DateHeader';
+// comps
+import SubmitEntry from './SubmitEntry';
 // react native comps
 import { View, Text } from "react-native";
 // data
-import { getMetricMetaInfo } from '../utils/helpers'
+import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 
 const AddEntry = () => {
 
@@ -28,7 +30,7 @@ const AddEntry = () => {
         const { max, step } = getMetricMetaInfo(metric)
         //  increase the metric with the step value
         const increase = state[metric] + step
-        // set the new state
+        // update the state based on the previous state
         setState({
             //do not modifiy the original state, instead, return a copy
             ...state,
@@ -58,11 +60,31 @@ const AddEntry = () => {
         })
     }
 
+    const submit = () => {
+        const key = timeToString()
+        const entry = state
+
+        // reset state
+        setState({
+            run: 0,
+            bike: 0,
+            swim: 0,
+            sleep: 0,
+            eat: 0,
+        })
+
+        // for later:
+        // update redux
+        // navigate to home
+        // save info to DB
+        // clear local notification
+    }
+
     const metaInfo = getMetricMetaInfo()
     const entryDate = new Date().toLocaleDateString()
     return (
         <View>
-            <DateHeader date={entryDate}/>
+            <DateHeader date={entryDate} />
             {
                 // make an array of the properties of the metaInfo object. 
                 Object.keys(metaInfo).map(key => {
@@ -85,17 +107,18 @@ const AddEntry = () => {
                                     />
                                     : <MetricStepper
                                         value={value}
-                                        onIncrement={ () => increment(key)}
-                                        onDecrement={ () => decrement(key)}
+                                        onIncrement={() => increment(key)}
+                                        onDecrement={() => decrement(key)}
                                         {...rest}
                                     />
                             }
 
                         </View>
                     )
-
                 })
             }
+            <SubmitEntry 
+                onPress={submit}/>
         </View>
     )
 }
