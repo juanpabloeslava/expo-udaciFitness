@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // comps
 import MetricSlider from './MetricSlider';
 import MetricStepper from './MetricStepper';
+import DateHeader from './DateHeader';
 // react native comps
 import { View, Text } from "react-native";
 // data
@@ -58,9 +59,10 @@ const AddEntry = () => {
     }
 
     const metaInfo = getMetricMetaInfo()
-
+    const entryDate = new Date().toLocaleDateString()
     return (
         <View>
+            <DateHeader date={entryDate}/>
             {
                 // make an array of the properties of the metaInfo object. 
                 Object.keys(metaInfo).map(key => {
