@@ -1,4 +1,9 @@
-// utils/helpers.js
+import React from "react";
+// react native comps
+import { View } from "react-native";
+// icons and colors
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { white } from "./colors";
 
 export function isBetween(num, x, y) {
     if (num >= x && num <= y) {
@@ -40,4 +45,83 @@ export function timeToString(time = Date.now()) {
     const date = new Date(time)
     const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
     return todayUTC.toISOString().split('T')[0]
+}
+
+export function getMetricMetaInfo(metric) {
+    const info = {
+        run: {
+            displayName: 'Run',
+            max: 50,
+            unit: 'miles',
+            step: 1,
+            type: 'steppers',
+            getIcon() {
+                return (
+                    <View>
+                        <MaterialIcons name='directions-run' color={'black'} size={35} />
+                    </View>
+                )
+            }
+        },
+        bike: {
+            displayName: 'Bike',
+            max: 100,
+            unit: 'miles',
+            step: 1,
+            type: 'steppers',
+            getIcon() {
+                return (
+                    <View>
+                        <MaterialIcons name='directions-bike' color={'black'} size={35} />
+                    </View>
+                )
+            }
+        },
+        swim: {
+            displayName: 'Swimm',
+            max: 9900,
+            unit: 'meters',
+            step: 100,
+            type: 'steppers',
+            getIcon() {
+                return (
+                    <View>
+                        <MaterialIcons name='pool' color={'black'} size={35} />
+                    </View>
+                )
+            }
+        },
+        sleep: {
+            displayName: 'Sleep',
+            max: 24,
+            unit: 'hours',
+            step: 1,
+            type: 'slider',
+            getIcon() {
+                return (
+                    <View>
+                        <MaterialIcons name='bedtime' color={'black'} size={35} />
+                    </View>
+                )
+            }
+        },
+        eat: {
+            displayName: 'Eat',
+            max: 10,
+            unit: 'rating',
+            step: 1,
+            type: 'slider',
+            getIcon() {
+                return (
+                    <View>
+                        <MaterialIcons name='fastfood' color={'black'} size={35} />
+                    </View>
+                )
+            }
+        }
+    }
+    // if no metric was specified as an arg, return the whole thing. If it was specified, return the info of that metric
+    return typeof metric === 'undefined'
+        ? info
+        : info[metric]
 }
