@@ -6,7 +6,7 @@ import DateHeader from './DateHeader';
 // comps
 import SubmitEntry from './SubmitEntry';
 // react native comps
-import { View, Text } from "react-native";
+import { View } from "react-native";
 // data
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 
@@ -22,9 +22,10 @@ const AddEntry = () => {
         eat: 0,
     });
 
-    useEffect(() => {
-        console.log('state: ', state)
-    }, [])
+    // call once on component mount
+    // useEffect(() => {
+    //     console.log('state called in AddEntry: ', state)
+    // }, [])
 
     const increment = (metric) => {
         const { max, step } = getMetricMetaInfo(metric)
@@ -56,6 +57,7 @@ const AddEntry = () => {
 
     const slider = (metric, value) => {
         setState({
+            ...state,
             [metric]: value
         })
     }
@@ -82,12 +84,14 @@ const AddEntry = () => {
 
     const metaInfo = getMetricMetaInfo()
     const entryDate = new Date().toLocaleDateString()
+
     return (
         <View>
             <DateHeader date={entryDate} />
             {
                 // make an array of the properties of the metaInfo object. 
                 Object.keys(metaInfo).map(key => {
+                    // key represents each one of the possible metrics: 'run, bike, swim, sleep, eat'
                     const { getIcon, type, ...rest } = metaInfo[key]
                     const value = state[key]
                     // For each element of the array, return that item's icon, and render either a stepper of a slider depending on its type 
@@ -102,7 +106,7 @@ const AddEntry = () => {
                                 type === 'slider'
                                     ? <MetricSlider
                                         value={value}
-                                        onChange={value => slider(key, value)}
+                                        onChange={(value) => slider(key, value)}
                                         {...rest}
                                     />
                                     : <MetricStepper
