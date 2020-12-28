@@ -6,12 +6,16 @@ import DateHeader from './DateHeader';
 // comps
 import SubmitEntry from './SubmitEntry';
 // react native comps
-import { View } from "react-native";
+import { Text, View } from "react-native";
 // data
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
+// icons
+import { MaterialIcons } from "@expo/vector-icons";
+import TextButton from './TextButton';
 
 const AddEntry = () => {
 
+    const [alredyLogged, setAlredyLogged] = useState(true);
     const [state, setState] = useState({
         // increment and decrement
         run: 0,
@@ -82,8 +86,33 @@ const AddEntry = () => {
         // clear local notification
     }
 
+    const resetDay = () => {
+        const key = timeToString()
+        
+        setAlredyLogged(false)
+        // for later:
+        // update redux
+        // navigate to home
+        // save info to DB
+        // clear local notification
+    }
+
     const metaInfo = getMetricMetaInfo()
     const entryDate = new Date().toLocaleDateString()
+
+    // if user has already logged his info for the day, let him know and give him an option to reset the data
+    // if ( ImagePropTypes.alreadyLogged ) {
+    if ( alredyLogged ) {
+        return (
+            <View>
+                <MaterialIcons name='tag-faces' size={30} />
+                <Text> You already logged your info for today </Text>
+                <TextButton onPress={resetDay}>
+                    Reset
+                </TextButton>
+            </View>
+        )
+    }
 
     return (
         <View>
