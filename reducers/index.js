@@ -1,6 +1,8 @@
 import { RECEIVE_ENTRIES, ADD_ENTRY } from '../actions/actionTypes'
 
-const entriesReducer = (state = {}, action) => {
+const initialState = {}
+
+const entries = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_ENTRIES :
       return {
@@ -18,4 +20,4 @@ const entriesReducer = (state = {}, action) => {
   }
 }
 
-export default entriesReducer
+export default entries

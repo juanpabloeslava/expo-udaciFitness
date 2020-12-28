@@ -13,8 +13,15 @@ import { submitEntry, removeEntry } from '../utils/api'
 // icons
 import { MaterialIcons } from "@expo/vector-icons";
 import TextButton from './TextButton';
+// redux, actions
+import { connect, useDispatch, useSelector } from 'react-redux'
+import { addEntry, receiveEntries } from '../actions'
 
-const AddEntry = () => {
+const AddEntry = (props) => {
+
+    // store things
+    const dispatch = useDispatch()
+    const entries = useSelector( state => state.entries )
 
     const [alredyLogged, setAlredyLogged] = useState(false);
     
@@ -29,9 +36,12 @@ const AddEntry = () => {
     });
 
     // call once on component mount
-    // useEffect(() => {
-    //     console.log('state called in AddEntry: ', state)
-    // }, [])
+    useEffect(() => {
+        console.log('state called in AddEntry: ', state)
+        console.log('props in AddEntry: ', props)
+        console.log('dispatch: ', dispatch)
+        console.log('state.entries: ', entries)
+    }, [])
 
     const increment = (metric) => {
         const { max, step } = getMetricMetaInfo(metric)
@@ -82,7 +92,10 @@ const AddEntry = () => {
         })
 
         // for later:
-        // update redux
+        // update redux store
+        dispatch(addEntry({
+            [key]: entry
+        }))
         // navigate to home
         // save info to DB
         submitEntry(key,entry)
@@ -94,6 +107,10 @@ const AddEntry = () => {
       
         // for later:
         // update redux
+        // dispatch(addEntry({
+        //     // reset it to what it was originally
+        //     [key]:
+        // }))
         // navigate to home
         // save info to DB
         removeEntry(key)
@@ -159,4 +176,4 @@ const AddEntry = () => {
     )
 }
 
-export default AddEntry
+export default connect()(AddEntry)
