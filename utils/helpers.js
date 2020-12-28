@@ -2,7 +2,7 @@ import React from "react";
 // react native comps
 import { View } from "react-native";
 // icons and colors
-import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { white } from "./colors";
 
 export function isBetween(num, x, y) {
