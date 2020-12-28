@@ -9,13 +9,15 @@ import SubmitEntry from './SubmitEntry';
 import { Text, View } from "react-native";
 // data
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
+import { submitEntry, removeEntry } from '../utils/api'
 // icons
 import { MaterialIcons } from "@expo/vector-icons";
 import TextButton from './TextButton';
 
 const AddEntry = () => {
 
-    const [alredyLogged, setAlredyLogged] = useState(true);
+    const [alredyLogged, setAlredyLogged] = useState(false);
+    
     const [state, setState] = useState({
         // increment and decrement
         run: 0,
@@ -83,17 +85,18 @@ const AddEntry = () => {
         // update redux
         // navigate to home
         // save info to DB
+        submitEntry(key,entry)
         // clear local notification
     }
 
     const resetDay = () => {
         const key = timeToString()
-        
-        setAlredyLogged(false)
+      
         // for later:
         // update redux
         // navigate to home
         // save info to DB
+        removeEntry(key)
         // clear local notification
     }
 
