@@ -9,21 +9,24 @@ import SubmitEntry from './SubmitEntry';
 import { Text, View } from "react-native";
 // data
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
-import { submitEntry, removeEntry } from '../utils/api'
+import { submitEntry, removeEntry, getDailyReminderValue } from '../utils/api'
 // icons
 import { MaterialIcons } from "@expo/vector-icons";
 import TextButton from './TextButton';
 // redux, actions
-import { connect, useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addEntry, receiveEntries } from '../actions'
 
 const AddEntry = (props) => {
 
-    // store things
+    // state and dispatch
     const dispatch = useDispatch()
+    const stateRaw = useSelector( state => state)
     const entries = useSelector( state => state.entries )
 
-    const [alredyLogged, setAlredyLogged] = useState(false);
+    // alreadyLogged section
+    const key = timeToString()
+    const alreadyLogged = (stateRaw[key] && typeof stateRaw[key].today === 'undefined') ? true : undefined
     
     const [state, setState] = useState({
         // increment and decrement
@@ -41,6 +44,8 @@ const AddEntry = (props) => {
         console.log('props in AddEntry: ', props)
         console.log('dispatch: ', dispatch)
         console.log('state.entries: ', entries)
+        // console.log('checkAlreadyLogged: ', checkAlreadyLogged)
+        console.log('alreadyLogged: ', alreadyLogged)
     }, [])
 
     const increment = (metric) => {
@@ -107,10 +112,11 @@ const AddEntry = (props) => {
       
         // for later:
         // update redux
-        // dispatch(addEntry({
-        //     // reset it to what it was originally
-        //     [key]:
-        // }))
+        dispatch(addEntry({
+            // reset the value for that day to the reminder to log the data for the day 
+            // { today: "Don't forget to log your data for today" }
+            [key]: getDailyReminderValue()
+        }))
         // navigate to home
         // save info to DB
         removeEntry(key)
@@ -121,8 +127,7 @@ const AddEntry = (props) => {
     const entryDate = new Date().toLocaleDateString()
 
     // if user has already logged his info for the day, let him know and give him an option to reset the data
-    // if ( ImagePropTypes.alreadyLogged ) {
-    if ( alredyLogged ) {
+    if ( alreadyLogged ) {
         return (
             <View>
                 <MaterialIcons name='tag-faces' size={30} />
@@ -176,4 +181,5 @@ const AddEntry = (props) => {
     )
 }
 
-export default connect()(AddEntry)
+// export default connect()(AddEntry)
+export default AddEntry
