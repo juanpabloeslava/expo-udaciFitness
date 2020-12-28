@@ -21,14 +21,21 @@ const AddEntry = (props) => {
 
     // state and dispatch
     const dispatch = useDispatch()
-    const stateRaw = useSelector( state => state)
     const entries = useSelector( state => state.entries )
 
-    // alreadyLogged section
+    // check if today's entry has already been logged
     const key = timeToString()
-    const alreadyLogged = (stateRaw[key] && typeof stateRaw[key].today === 'undefined') ? true : undefined
+    const alreadyLogged = useSelector( state => {
+        // alreadyLogged will be set to true if there exists an entry for today in the state, AND if state[key].today hasn't been defined, which means the user hasn't reset the entry data
+        if (state[key] && typeof state[key].today === 'undefined') {
+            return true
+        } else {
+            return undefined
+        }
+    }) 
     
-    const [state, setState] = useState({
+    // local entry state
+    const [entryState, setEntryState] = useState({
         // increment and decrement
         run: 0,
         bike: 0,
@@ -40,7 +47,7 @@ const AddEntry = (props) => {
 
     // call once on component mount
     useEffect(() => {
-        console.log('state called in AddEntry: ', state)
+        console.log('state called in AddEntry: ', entryState)
         console.log('props in AddEntry: ', props)
         console.log('dispatch: ', dispatch)
         console.log('state.entries: ', entries)
@@ -51,11 +58,11 @@ const AddEntry = (props) => {
     const increment = (metric) => {
         const { max, step } = getMetricMetaInfo(metric)
         //  increase the metric with the step value
-        const increase = state[metric] + step
+        const increase = entryState[metric] + step
         // update the state based on the previous state
-        setState({
+        setEntryState({
             //do not modifiy the original state, instead, return a copy
-            ...state,
+            ...entryState,
             // return the new value for the metric: if it's greater than the max value, return the max value, if it's not, then increase
             [metric]: increase > max
                 ? max
@@ -66,10 +73,10 @@ const AddEntry = (props) => {
     const decrement = (metric) => {
         const { step } = getMetricMetaInfo(metric)
         //  decrease the metric with the step value
-        const decrease = state[metric] - step
+        const decrease = entryState[metric] - step
         // set the new state
-        setState({
-            ...state,
+        setEntryState({
+            ...entryState,
             [metric]: decrease < 0
                 ? 0
                 : decrease
@@ -77,18 +84,18 @@ const AddEntry = (props) => {
     }
 
     const slider = (metric, value) => {
-        setState({
-            ...state,
+        setEntryState({
+            ...entryState,
             [metric]: value
         })
     }
 
     const submit = () => {
         const key = timeToString()
-        const entry = state
+        const entry = entryState
 
         // reset state
-        setState({
+        setEntryState({
             run: 0,
             bike: 0,
             swim: 0,
@@ -147,7 +154,7 @@ const AddEntry = (props) => {
                 Object.keys(metaInfo).map(key => {
                     // key represents each one of the possible metrics: 'run, bike, swim, sleep, eat'
                     const { getIcon, type, ...rest } = metaInfo[key]
-                    const value = state[key]
+                    const value = entryState[key]
                     // For each element of the array, return that item's icon, and render either a stepper of a slider depending on its type 
                     return (
                         <View key={key}>
