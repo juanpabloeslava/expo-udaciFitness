@@ -6,13 +6,14 @@ import DateHeader from './DateHeader';
 // comps
 import SubmitEntry from './SubmitEntry';
 // react native comps
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet, Platform } from "react-native";
 // data
 import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers'
-import { submitEntry, removeEntry  } from '../utils/api'
-// icons
-import { MaterialIcons } from "@expo/vector-icons";
+import { submitEntry, removeEntry } from '../utils/api'
+// icons and colors
+import { Ionicons } from "@expo/vector-icons";
 import TextButton from './TextButton';
+import { white } from "../utils/colors";
 // redux, actions
 import { useDispatch, useSelector } from 'react-redux'
 import { addEntry, receiveEntries } from '../actions'
@@ -21,19 +22,19 @@ const AddEntry = (props) => {
 
     // state and dispatch
     const dispatch = useDispatch()
-    const entries = useSelector( state => state.entries )
+    const entries = useSelector(state => state.entries)
 
     // check if today's entry has already been logged
     const key = timeToString()
-    const alreadyLogged = useSelector( state => {
+    const alreadyLogged = useSelector(state => {
         // alreadyLogged will be set to true if there exists an entry for today in the state, AND if state[key].today hasn't been defined, which means the user hasn't reset the entry data
         if (state[key] && typeof state[key].today === 'undefined') {
             return true
         } else {
             return undefined
         }
-    }) 
-    
+    })
+
     // local entry state
     const [entryState, setEntryState] = useState({
         // increment and decrement
@@ -110,13 +111,13 @@ const AddEntry = (props) => {
         }))
         // navigate to home
         // save info to DB
-        submitEntry(key,entry)
+        submitEntry(key, entry)
         // clear local notification
     }
 
     const resetDay = () => {
         const key = timeToString()
-      
+
         // for later:
         // update redux
         dispatch(addEntry({
@@ -134,12 +135,16 @@ const AddEntry = (props) => {
     const entryDate = new Date().toLocaleDateString()
 
     // if user has already logged his info for the day, let him know and give him an option to reset the data
-    if ( alreadyLogged ) {
+    if (alreadyLogged) {
         return (
-            <View>
-                <MaterialIcons name='tag-faces' size={30} />
+            <View style={styles.center}>
+                {
+                    Platform.OS === 'ios'
+                        ? <Ionicons name='ios-happy-outline' size={30} />
+                        : <Ionicons name='md-happy-outline' size={30} />
+                }
                 <Text> You already logged your info for today </Text>
-                <TextButton onPress={resetDay}>
+                <TextButton style={{ padding: 10 }} onPress={resetDay}>
                     Reset
                 </TextButton>
             </View>
@@ -147,7 +152,7 @@ const AddEntry = (props) => {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
             <DateHeader date={entryDate} />
             {
                 // make an array of the properties of the metaInfo object. 
@@ -157,7 +162,7 @@ const AddEntry = (props) => {
                     const value = entryState[key]
                     // For each element of the array, return that item's icon, and render either a stepper of a slider depending on its type 
                     return (
-                        <View key={key}>
+                        <View style={styles.row} key={key}>
                             {
                                 // element's icon
                                 getIcon()
@@ -182,11 +187,31 @@ const AddEntry = (props) => {
                     )
                 })
             }
-            <SubmitEntry 
-                onPress={submit}/>
+            <SubmitEntry
+                onPress={submit} />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: white
+    },
+    row: {
+        flexDirection: "row",
+        flex: 1,
+        alignItems: "center"
+    },
+    center: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: 30,
+        marginRight: 30
+    }
+})
 
 // export default connect()(AddEntry)
 export default AddEntry
