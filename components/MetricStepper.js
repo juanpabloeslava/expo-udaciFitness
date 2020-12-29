@@ -7,7 +7,7 @@ import { white, purple, gray } from "../utils/colors";
 
 const MetricStepper = (props) => {
 
-    const { max, unit, step, value, onIncrement, onDecrement } = props
+    const { unit, value, onIncrement, onDecrement } = props
 
     return (
         <View style={[styles.row, { justifyContent: 'space-between' }]}>
