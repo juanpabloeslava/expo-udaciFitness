@@ -4,10 +4,13 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native
 // colors
 import { white, purple } from "../utils/colors";
 
-const SubmitEntry = ({ onPress }) => {
+const SubmitEntry = props => {
+    
+    const { children, onPress } = props
+
     return ( 
         <TouchableOpacity style={ Platform.OS === "ios" ? styles.iosSubmitBtn : styles.AndroidSubmitBtn } onPress={onPress}>
-            <Text style={styles.submitBtnText}> SUBMIT </Text>
+            <Text style={styles.submitBtnText}> {children} </Text>
         </TouchableOpacity>
     )
 }

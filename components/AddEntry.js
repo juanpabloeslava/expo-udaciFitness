@@ -187,8 +187,9 @@ const AddEntry = (props) => {
                     )
                 })
             }
-            <SubmitEntry
-                onPress={submit} />
+            <SubmitEntry onPress={submit}>
+                Submit
+            </SubmitEntry>
         </View>
     )
 }
