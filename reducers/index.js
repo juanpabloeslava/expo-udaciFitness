@@ -1,4 +1,5 @@
 import { RECEIVE_ENTRIES, ADD_ENTRY } from '../actions/actionTypes'
+import { combineReducers } from 'redux'
 
 const initialState = {}
 
@@ -20,4 +21,6 @@ const entries = (state = initialState, action) => {
   }
 }
 
-export default entries
+export default combineReducers({
+  entries
+})

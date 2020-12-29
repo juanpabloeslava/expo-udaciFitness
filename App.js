@@ -1,5 +1,8 @@
 // yarn add @react-native-async-storage/async-storage
 // yarn add redux react-redux
+// yarn add redux-thunk     --> not yet
+// npm i --save redux-logger
+// npm install --save redux-devtools-extension
 
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';

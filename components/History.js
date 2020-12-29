@@ -37,15 +37,15 @@ const History = () => {
     }, [])
 
     // state from store
-    const allentries = useSelector(state => state.entries)
-    console.log('entries at end: ', allentries)
+    const entries = useSelector(state => state.entries)
+    console.log('entries at end: ', entries)
 
 
 
     return (
         <View>
             <Text> History </Text>
-            <Text> {JSON.stringify(allentries)} </Text>
+            <Text> {JSON.stringify(entries)} </Text>
         </View>
     )
 
