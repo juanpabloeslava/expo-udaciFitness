@@ -21,11 +21,3 @@ export const removeEntry = ( key ) => {
             AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data))
         })
 }
-
-// for reseting an entry on a specific date
-export const getDailyReminderValue = () => {
-    // return a key that'll be set as the default entry value
-    return {
-        today: "Don't forget to log your data for today"
-    }
-}

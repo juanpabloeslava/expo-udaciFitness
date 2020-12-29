@@ -13,8 +13,8 @@ import store from './store'
 export default function App() {
 
   return (
-    <Provider store = {store} >
-      <View>
+    <Provider store={store} >
+      <View style={{ flex: 1 }}>
         <AddEntry />
       </View>
     </Provider>

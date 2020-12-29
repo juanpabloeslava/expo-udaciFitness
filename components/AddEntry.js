@@ -8,8 +8,8 @@ import SubmitEntry from './SubmitEntry';
 // react native comps
 import { Text, View } from "react-native";
 // data
-import { getMetricMetaInfo, timeToString } from '../utils/helpers'
-import { submitEntry, removeEntry, getDailyReminderValue } from '../utils/api'
+import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers'
+import { submitEntry, removeEntry  } from '../utils/api'
 // icons
 import { MaterialIcons } from "@expo/vector-icons";
 import TextButton from './TextButton';

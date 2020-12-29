@@ -1,11 +1,32 @@
 import React from "react";
 // react native comps
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 // icons and colors
 import { MaterialIcons } from "@expo/vector-icons";
-import { white } from "./colors";
+import { red, orange, blue, lightPurp, pink, white } from './colors'
 
-export function isBetween(num, x, y) {
+// styles
+const styles = StyleSheet.create({
+    iconContainer: {
+        padding: 5,
+        borderRadius: 8,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 20
+    }
+})
+
+// for reseting an entry on a specific date
+export const getDailyReminderValue = () => {
+    // return a key that'll be set as the default entry value
+    return {
+        today: "Don't forget to log your data for today"
+    }
+}
+
+export const isBetween = (num, x, y) => {
     if (num >= x && num <= y) {
         return true
     }
@@ -13,7 +34,7 @@ export function isBetween(num, x, y) {
     return false
 }
 
-export function calculateDirection(heading) {
+export const calculateDirection = (heading) => {
     let direction = ''
 
     if (isBetween(heading, 0, 22.5)) {
@@ -41,13 +62,13 @@ export function calculateDirection(heading) {
     return direction
 }
 
-export function timeToString(time = Date.now()) {
+export const timeToString = (time = Date.now()) => {
     const date = new Date(time)
     const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
     return todayUTC.toISOString().split('T')[0]
 }
 
-export function getMetricMetaInfo(metric) {
+export const getMetricMetaInfo = (metric) => {
     const info = {
         run: {
             displayName: 'Run',
@@ -57,8 +78,8 @@ export function getMetricMetaInfo(metric) {
             type: 'steppers',
             getIcon() {
                 return (
-                    <View>
-                        <MaterialIcons name='directions-run' color={'black'} size={35} />
+                    <View style={[styles.iconContainer, {backgroundColor: red}]}>
+                        <MaterialIcons name='directions-run' color={white} size={35} />
                     </View>
                 )
             }
@@ -71,8 +92,8 @@ export function getMetricMetaInfo(metric) {
             type: 'steppers',
             getIcon() {
                 return (
-                    <View>
-                        <MaterialIcons name='directions-bike' color={'black'} size={35} />
+                    <View style={[styles.iconContainer, {backgroundColor: orange}]}>
+                        <MaterialIcons name='directions-bike' color={white} size={35} />
                     </View>
                 )
             }
@@ -85,8 +106,8 @@ export function getMetricMetaInfo(metric) {
             type: 'steppers',
             getIcon() {
                 return (
-                    <View>
-                        <MaterialIcons name='pool' color={'black'} size={35} />
+                    <View style={[styles.iconContainer, {backgroundColor: blue}]}>
+                        <MaterialIcons name='pool' color={white} size={35} />
                     </View>
                 )
             }
@@ -99,8 +120,8 @@ export function getMetricMetaInfo(metric) {
             type: 'slider',
             getIcon() {
                 return (
-                    <View>
-                        <MaterialIcons name='bedtime' color={'black'} size={35} />
+                    <View style={[styles.iconContainer, {backgroundColor: lightPurp}]}>
+                        <MaterialIcons name='bedtime' color={white} size={35} />
                     </View>
                 )
             }
@@ -113,8 +134,8 @@ export function getMetricMetaInfo(metric) {
             type: 'slider',
             getIcon() {
                 return (
-                    <View>
-                        <MaterialIcons name='fastfood' color={'black'} size={35} />
+                    <View style={[styles.iconContainer, {backgroundColor: pink}]}>
+                        <MaterialIcons name='fastfood' color={white} size={35} />
                     </View>
                 )
             }
