@@ -1,6 +1,12 @@
 // import { AsyncStorage } from 'react-native'     // deprecated
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { CALENDAR_STORAGE_KEY } from './_calendar'
+import { CALENDAR_STORAGE_KEY, formatCalendarResults } from './_calendar'
+
+export const fetchCalendarResults = ( ) => {
+    return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
+        .then(formatCalendarResults)
+        // .then( resp => formatCalendarResults(resp) )
+}
 
 export const submitEntry = ( { key, entry } ) => {
     // merge a strngified JSON of the [key]: entry property into the CALENDAR_STORAGE_KEY
