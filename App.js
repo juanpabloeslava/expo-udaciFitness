@@ -13,6 +13,7 @@ import { View, Text } from 'react-native';
 // comps
 import AddEntry from './components/AddEntry'
 import History from './components/History'
+import History2 from './components/History2';
 // redux
 import { Provider } from 'react-redux'
 import store from './store'
@@ -24,6 +25,7 @@ export default function App() {
       <View style={{ flex: 1 }}>
         <View style={{height: 30}}/>  
         <History />
+        {/* <History2 /> */}
         {/* <AddEntry /> */}
       </View>
     </Provider>

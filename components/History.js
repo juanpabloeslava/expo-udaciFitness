@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 // comps
 import AddEntry from './AddEntry';
@@ -40,10 +40,12 @@ const History = () => {
 
     }, [])
 
+    // local state
+    const [selectedDate, setSelectedDate] = useState( new Date().toISOString().slice(0,10));
     // state from store
     const entries = useSelector(state => state.entries)
 
-    const renderItem = ({ today, ...metrics }, formattedDate, key) => (   // gets passed an obj. It's either the state from sotre(metrics), or 'getDailyReminderValue' from ./utils/helpers (today)
+    const renderItem = ({ today, ...metrics }, firstItemInDay) => (   // gets passed an obj. It's either the state from sotre(metrics), or 'getDailyReminderValue' from ./utils/helpers (today)
         <View style={styles.item}>
             {
                 today
@@ -73,7 +75,7 @@ const History = () => {
             <UdaciFitnessCalendar
                 items={entries}
                 // receives a function that returns some JSX that will be rendered when the calendar ants to show a specific date
-                renderItem={renderItem}
+                renderItem={(item, firstItemInDay) => renderItem(selectedDate, item, firstItemInDay)}
                 // if the afforedmentioned date is empty, then return the following
                 renderEmptyDate={renderEmptyDate}
             />
