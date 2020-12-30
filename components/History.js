@@ -12,7 +12,8 @@ import { addEntry, receiveEntries } from '../actions'
 // calendar
 import { Agenda as UdaciFitnessCalendar } from 'react-native-calendars'
 // colors
-import { red, orange, blue, lightPurp, pink, white } from '../utils/colors'
+import { white } from '../utils/colors'
+import { render } from 'react-dom';
 
 const History = () => {
 
@@ -40,20 +41,15 @@ const History = () => {
 
     }, [])
 
-    // local state
-    const [selectedDate, setSelectedDate] = useState( new Date().toISOString().slice(0,10));
     // state from store
     const entries = useSelector(state => state.entries)
 
-    const renderItem = ({ today, ...metrics }, firstItemInDay) => (   // gets passed an obj. It's either the state from sotre(metrics), or 'getDailyReminderValue' from ./utils/helpers (today)
+    const renderItem = ({ today, ...metrics }, formattedDate, key) => (   // gets passed an obj. It's either the state from sotre(metrics), or 'getDailyReminderValue' from ./utils/helpers (today)
         <View style={styles.item}>
             {
                 today
                     ? <View>
-                        {/* <DateHeader date={formattedDate}/> */}
-                        <Text style={styles.noDataText}>
-                            {today}
-                        </Text>
+                        <Text>{JSON.stringify(today)}</Text>
                     </View>
                     : <TouchableOpacity onPress={() => console.log('button pressed')}>
                         <Text>{JSON.stringify(metrics)}</Text>
@@ -75,7 +71,7 @@ const History = () => {
             <UdaciFitnessCalendar
                 items={entries}
                 // receives a function that returns some JSX that will be rendered when the calendar ants to show a specific date
-                renderItem={(item, firstItemInDay) => renderItem(selectedDate, item, firstItemInDay)}
+                renderItem={renderItem}
                 // if the afforedmentioned date is empty, then return the following
                 renderEmptyDate={renderEmptyDate}
             />
