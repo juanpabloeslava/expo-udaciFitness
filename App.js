@@ -5,7 +5,10 @@
 // yarn add redux-thunk     --> not yet
 // npm i --save redux-logger
 // npm install --save redux-devtools-extension
+
 // npm install @react-navigation/native
+// npm install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+// npm install @react-navigation/stack
 
 // npm install --save react-native-calendars
 // npm install udacifitness-calendar-fix
@@ -29,9 +32,9 @@ export default function App() {
     <Provider store={store} >
       <View style={{ flex: 1 }}>
         <View style={{height: 30}}/>  
-        <History />
+        {/* <History /> */}
         {/* <History2 /> */}
-        {/* <AddEntry /> */}
+        <AddEntry />
       </View>
     </Provider>
   )
