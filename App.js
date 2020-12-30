@@ -4,6 +4,9 @@
 // npm i --save redux-logger
 // npm install --save redux-devtools-extension
 
+// npm install --save react-native-calendars
+// npm install udacifitness-calendar-fix
+
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { View, Text } from 'react-native';
@@ -19,6 +22,7 @@ export default function App() {
   return (
     <Provider store={store} >
       <View style={{ flex: 1 }}>
+        <View style={{height: 30}}/>  
         <History />
         {/* <AddEntry /> */}
       </View>

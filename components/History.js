@@ -8,6 +8,8 @@ import { fetchCalendarResults } from '../utils/api'
 // redux, actions
 import { useDispatch, useSelector } from 'react-redux'
 import { addEntry, receiveEntries } from '../actions'
+// calendar
+import { Agenda as UdaciFitnessCalendar } from 'react-native-calendars'
 
 const History = () => {
 
@@ -23,8 +25,7 @@ const History = () => {
             .then(entries => dispatch(receiveEntries(entries)))
             // check if entries include an entry for today
             .then(({ entries }) => {      // pass entries as an object
-                console.log(entries)
-                // there 0sn't an entry for today, then add a new entry, and set it to the reminder
+                // there isn't an entry for today, then add a new entry, and set it to the reminder
                 if (!entries[key]) {
                     console.log("I'm here")
                     dispatch(addEntry({
@@ -38,14 +39,34 @@ const History = () => {
 
     // state from store
     const entries = useSelector(state => state.entries)
-    console.log('entries at end: ', entries)
 
+    const renderItem = ( { today, ...metrics }, formattedDate, key ) => (   // gets passed an obj. It's either the state from sotre(metrics), or 'getDailyReminderValue' from ./utils/helpers (today)
+        <View>
+            {
+                today
+                    ? <Text> { JSON.stringify(today) } </Text>
+                    : <Text> { JSON.stringify(metrics) } </Text>
+            }
+        </View>
+    )
 
+    const renderEmptyDate = ( formattedDate ) => (
+        <View>
+            <Text> No data for this day </Text>
+        </View>
+    )
 
     return (
         <View>
-            <Text> History </Text>
-            <Text> {JSON.stringify(entries)} </Text>
+            {/* <Text> History </Text>
+            <Text> {JSON.stringify(entries)} </Text> */}
+            <UdaciFitnessCalendar 
+                items={entries}
+                // receives a function that returns some JSX that will be rendered when the calendar ants to show a specific date
+                renderItem={renderItem}
+                // if the afforedmentioned date is empty, then return the following
+                renderEmptyDate={renderEmptyDate}
+            />
         </View>
     )
 
