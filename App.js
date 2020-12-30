@@ -1,3 +1,5 @@
+// expo r -c
+
 // yarn add @react-native-async-storage/async-storage
 // yarn add redux react-redux
 // yarn add redux-thunk     --> not yet
