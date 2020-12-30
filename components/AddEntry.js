@@ -93,16 +93,17 @@ const AddEntry = (props) => {
 
     const submit = () => {
         const key = timeToString()
-        const entry = entryState
+        // const entry = entryState         // changed to array https://knowledge.udacity.com/questions/274397
+        const entry = [entryState]
 
         // reset state
-        setEntryState({
+        setEntryState([{
             run: 0,
             bike: 0,
             swim: 0,
             sleep: 0,
             eat: 0,
-        })
+        }])
 
         // for later:
         // update redux store

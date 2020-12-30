@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
 
 // for reseting an entry on a specific date
 export const getDailyReminderValue = () => {
-    // return a key that'll be set as the default entry value
-    return {
+    // return a key that'll be set as the default entry value. It has to be inside an array https://knowledge.udacity.com/questions/274397
+    return [{
         today: "Don't forget to log your data for today"
-    }
+    }]
 }
 
 export const isBetween = (num, x, y) => {

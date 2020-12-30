@@ -20,14 +20,15 @@ function setDummyData() {
         const time = timestamp + i * 24 * 60 * 60 * 1000
         const strTime = timeToString(time)
         dummyData[strTime] = getRandomNumber(3) % 2 === 0
-            ? {
+            ? [{
                 run: getRandomNumber(run.max),
                 bike: getRandomNumber(bike.max),
                 swim: getRandomNumber(swim.max),
                 sleep: getRandomNumber(sleep.max),
                 eat: getRandomNumber(eat.max),
-            }
-            : null
+            }]
+            // : null                   // changed to new Array ()   https://knowledge.udacity.com/questions/274397
+            : new Array()
     }
 
     AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(dummyData))
@@ -44,7 +45,8 @@ function setMissingDates(dates) {
         const strTime = timeToString(time)
 
         if (typeof dates[strTime] === 'undefined') {
-            dates[strTime] = null
+            // dates[strTime] = null           // same as above
+            dates[strTime] = new Array()
         }
     }
 

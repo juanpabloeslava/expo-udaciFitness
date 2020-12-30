@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 // comps
 import AddEntry from './AddEntry';
+import DateHeader from './DateHeader';
 // data
 import { timeToString, getDailyReminderValue } from '../utils/helpers'
 import { fetchCalendarResults } from '../utils/api'
@@ -10,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addEntry, receiveEntries } from '../actions'
 // calendar
 import { Agenda as UdaciFitnessCalendar } from 'react-native-calendars'
+// colors
+import { red, orange, blue, lightPurp, pink, white } from '../utils/colors'
 
 const History = () => {
 
@@ -40,19 +43,26 @@ const History = () => {
     // state from store
     const entries = useSelector(state => state.entries)
 
-    const renderItem = ( { today, ...metrics }, formattedDate, key ) => (   // gets passed an obj. It's either the state from sotre(metrics), or 'getDailyReminderValue' from ./utils/helpers (today)
-        <View>
+    const renderItem = ({ today, ...metrics }, formattedDate, key) => (   // gets passed an obj. It's either the state from sotre(metrics), or 'getDailyReminderValue' from ./utils/helpers (today)
+        <View style={styles.item}>
             {
                 today
-                    ? <Text> { JSON.stringify(today) } </Text>
-                    : <Text> { JSON.stringify(metrics) } </Text>
+                    ? <View>
+                        {/* <DateHeader date={formattedDate}/> */}
+                        <Text style={styles.noDataText}>
+                            {today}
+                        </Text>
+                    </View>
+                    : <TouchableOpacity onPress={() => console.log('button pressed')}>
+                        <Text>{JSON.stringify(metrics)}</Text>
+                    </TouchableOpacity>
             }
         </View>
     )
 
-    const renderEmptyDate = ( formattedDate ) => (
-        <View>
-            <Text> No data for this day </Text>
+    const renderEmptyDate = (formattedDate) => (
+        <View style={styles.item}>
+            <Text style={styles.noDataText}> No data for this day </Text>
         </View>
     )
 
@@ -60,7 +70,7 @@ const History = () => {
         <View>
             {/* <Text> History </Text>
             <Text> {JSON.stringify(entries)} </Text> */}
-            <UdaciFitnessCalendar 
+            <UdaciFitnessCalendar
                 items={entries}
                 // receives a function that returns some JSX that will be rendered when the calendar ants to show a specific date
                 renderItem={renderItem}
@@ -71,5 +81,29 @@ const History = () => {
     )
 
 }
+
+const styles = StyleSheet.create({
+    item: {
+        backgroundColor: white,
+        borderRadius: Platform.OS === 'ios' ? 16 : 2,
+        padding: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 17,
+        justifyContent: 'center',
+        shadowRadius: 3,
+        shadowOpacity: 0.8,
+        shadowColor: 'rgba(0, 0, 0, 0.24)',
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
+    },
+    noDataText: {
+        fontSize: 20,
+        paddingTop: 20,
+        paddingBottom: 20
+    }
+})
 
 export default History
