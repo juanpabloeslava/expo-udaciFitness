@@ -5,6 +5,7 @@
 // yarn add redux-thunk     --> not yet
 // npm i --save redux-logger
 // npm install --save redux-devtools-extension
+// npm install @react-navigation/native
 
 // npm install --save react-native-calendars
 // npm install udacifitness-calendar-fix
@@ -19,6 +20,8 @@ import History2 from './components/History2';
 // redux
 import { Provider } from 'react-redux'
 import store from './store'
+// navigation
+
 
 export default function App() {
 
