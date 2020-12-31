@@ -10,7 +10,8 @@ import { fetchCalendarResults } from '../utils/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { addEntry, receiveEntries } from '../actions'
 // calendar
-import { Agenda as UdaciFitnessCalendar } from 'react-native-calendars'
+// import { Agenda as UdaciFitnessCalendar } from 'react-native-calendars'
+import UdaciFitnessCalendar from 'udacifitness-calendar-fix'
 // colors
 import { white } from '../utils/colors'
 import { render } from 'react-dom';

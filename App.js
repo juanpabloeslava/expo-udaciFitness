@@ -36,7 +36,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 
-function UdaciStatusBar ({backgroundColor, ...props}) {
+function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
@@ -73,12 +73,12 @@ export default function App() {
               }
             }
             screenOptions={({ route }) => ({
-              tabBarIcon: ({tintColor}) => (
+              tabBarIcon: ({ tintColor }) => (
                 route.name === 'AddEntry'
                   ? <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
                   : route.name === 'History'
-                  ? <FontAwesome name='plus-square' size={30} color={tintColor} />
-                  : null
+                    ? <FontAwesome name='plus-square' size={30} color={tintColor} />
+                    : null
               )
             })}
           >
@@ -92,6 +92,18 @@ export default function App() {
             />
           </Tabs.Navigator>
         </NavigationContainer>
+        {/* <NavigationContainer>
+          <NavStack.Navigator>
+            <NavStack.Screen
+              name='AddEntry'
+              component={AddEntry}
+            />
+            <NavStack.Screen
+              name='History'
+              component={History}
+            />
+          </NavStack.Navigator>
+        </NavigationContainer> */}
       </View>
     </Provider >
   )
